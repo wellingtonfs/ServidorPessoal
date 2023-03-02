@@ -1,0 +1,140 @@
+body {
+    overflow: hidden;
+
+    display: flex;
+
+    width: 100vw;
+    height: 100vh;
+
+    flex-direction: column;
+}
+
+#divContent {
+    display: flex;
+
+    flex-direction: column;
+
+    width: 100%;
+    height: 95%;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+#divRodape {
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+
+    width: 100%;
+    height: 5%;
+
+    border-top: 1px solid var(--primary-color);
+}
+
+.row {
+    display: flex;
+
+    width: 100%;
+    min-height: calc(30vh + 10px + 10px);
+
+    overflow: hidden;
+
+    justify-content: space-around;
+}
+
+@media (max-width: calc((30vh + 10px + 10px) * 5)) {
+    .row {
+        overflow-x: auto;
+        justify-content: start;
+    }
+}
+
+.divPostit {
+    display: flex;
+    flex-direction: column;
+
+    width: 30vh;
+    height: 30vh;
+
+    min-width: 30vh;
+    min-height: 30vh;
+
+    border-radius: 0px;
+
+    background-color: var(--primary-color);
+
+    margin: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.divCores {
+    display: flex;
+
+    width: 90%;
+    height: 10%;
+
+    align-items: center;
+    justify-content: space-around;
+}
+
+.cor {
+    width: 10%;
+    height: 90%;
+    background-color: var(--primary-color);
+
+    border-radius: 100%;
+    overflow: hidden;
+
+    box-shadow: 1px 1px #111;
+}
+
+.cor:hover {
+    opacity: 0.5;
+}
+
+textarea {
+    width: 90%;
+    height: 85%;
+
+    background-color: transparent;
+
+    outline-width: 0px;
+    border-width: 0px;
+
+    color: var(--text-light);
+
+    font-size: large;
+
+    resize: none;
+}
+
+textarea::placeholder {
+    color: black;
+}
+
+.btnFooter {
+    display: flex;
+
+    width: 100%;
+    height: 100%;
+
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--back-cinza);
+}
+
+#btnVoltar:hover, #btnNovo:hover, #btnSalvar:hover {
+    background-color: var(--text-dark);
+}
+
+.btnFooter label {
+    color: var(--primary-color-selected);
+}
+
+.btnFooter label:hover {
+    color: var(--primary-color);
+}

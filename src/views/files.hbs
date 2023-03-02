@@ -1,0 +1,20 @@
+<link href="/css/files.css" rel="stylesheet">
+<script src="/js/files.js" defer></script>
+
+
+<div id="containerForm">
+    <div id="div_titulo" class="div_row">
+        <h3 id="titulo"></h3>
+        <label id="subtitulo"></label>
+    </div>
+    <div id="div_itens" class="scroll_style">
+    </div>
+</div>
+
+<script defer>
+    window.onload = () => {
+        let folder = "{{folder}}"
+
+        makeRequest({ folder })
+    }
+</script>

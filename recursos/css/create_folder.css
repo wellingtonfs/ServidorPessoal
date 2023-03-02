@@ -1,0 +1,93 @@
+body {
+    overflow: hidden;
+
+    display: flex;
+
+    width: 100vw;
+    height: 100vh;
+
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#containerForm {
+    display: flex;
+    flex-direction: column;
+
+    background-color: var(--back-cinza);
+    padding: 20px;
+
+    width: 30vw;
+    height: 25vh;
+
+    min-width: 250px;
+    min-height: 200px;
+    max-width: 700px;
+    max-height: 500px;
+
+    align-items: center;
+}
+
+#containerForm > h3 {
+    color: var(--text-light);
+}
+
+#containerForm > .div_row {
+    display: flex;
+
+    width: 100%;
+    height: 100%;
+
+    margin: 2px;
+    justify-content: center;
+}
+
+.div_dialog_label {
+    display: flex;
+
+    background-color: var(--primary-color);
+
+    width: 50%;
+    height: 100%;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.div_dialog_label > label {
+    color: var(--text-light);
+}
+
+.div_row > input {
+    display: flex;
+    width: 100%;
+
+    outline: 0px;
+
+    padding-left: 10px;
+    color: var(--text-light);
+}
+
+.div_row > button {
+    display: flex;
+
+    border-width: 0px;
+    width: 100%;
+
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--primary-color);
+    color: var(--text-light);
+}
+
+.div_row > button:hover {
+    background-color: var(--primary-color-selected);
+    color: var(--text-dark);
+}
+
+.inputAndSelect {
+    background-color: var(--back-cinza);
+    border-width: 0px;
+}

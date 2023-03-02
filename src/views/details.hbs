@@ -1,0 +1,70 @@
+<link href="/css/details.css" rel="stylesheet">
+<script src="/js/details.js" defer></script>
+
+<div id="containerForm">
+    <h3 id="titulo">Detalhes do Arquivo</h3>
+
+    <div class="div_row">
+        <div id="boxName" class="div_dialog_label">
+            <label>Nome</label>
+        </div>
+        <div class="div_info_field">
+            <label id="label_filename">Carregando...</label>
+        </div>
+    </div>
+
+    <div class="div_row">
+        <div class="div_dialog_label">
+            <label>Tamanho</label>
+        </div>
+        <div class="div_info_field">
+            <label id="label_size">Carregando...</label>
+        </div>
+    </div>
+
+    <div class="div_row">
+        <div class="div_dialog_label">
+            <label>Data</label>
+        </div>
+        <div class="div_info_field">
+            <label id="label_time">Carregando...</label>
+        </div>
+    </div>
+
+    <div class="div_row">
+        <div class="div_dialog_label">
+            <label>Endereço</label>
+        </div>
+        <div class="div_info_field">
+            <label id="label_link">Carregando...</label>
+        </div>
+    </div>
+
+    <div class="div_row">
+        <div class="div_dialog_label">
+            <label>Comentários</label>
+        </div>
+        <div class="div_info_field">
+            <textarea placeholder=""></textarea>
+        </div>
+    </div>
+
+    <div class="div_row">
+        <button id="btnView">Visualizar</button>
+    </div>
+
+    <div class="div_row">
+        <button id="btnDownload">Baixar</button>
+    </div>
+</div>
+
+<script>
+    window.onload = () => {
+        let folder = "{{folder}}"
+        let file = "{{file}}"
+
+        addGoBackButton("containerForm", encodeURI(`/view/${folder}`))
+
+        makeRequest({ folder, filename: file })
+    }
+</script>

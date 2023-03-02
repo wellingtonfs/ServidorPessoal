@@ -1,0 +1,159 @@
+body {
+    overflow: hidden;
+
+    display: flex;
+
+    width: 100vw;
+    height: 100vh;
+
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#containerForm {
+    display: flex;
+    flex-direction: column;
+
+    background-color: var(--back-cinza);
+    padding: 20px;
+
+    width: 50vw;
+    height: 40vh;
+
+    min-width: 250px;
+    min-height: 250px;
+
+    align-items: center;
+}
+
+@media (orientation: portrait) {
+    #containerForm {
+        width: 90vw;
+        height: 80vh;
+    }
+}
+
+@media (max-height: 520px) and (orientation: landscape) {
+    #containerForm {
+        height: 80vh;
+    }
+}
+
+#containerForm > h3 {
+    color: var(--text-light);
+}
+
+#inputArquivo {
+    display: none;
+}
+
+#div_inputArquivo {
+    display: flex;
+    width: 100%;
+
+    background-color: var(--primary-color);
+
+    align-items: center;
+    justify-content: center;
+}
+
+#div_inputArquivo:hover {
+    background-color: var(--primary-color-selected);
+}
+
+#div_inputArquivo > label {
+    color: var(--text-light);
+}
+
+#containerForm > .div_row {
+    display: flex;
+
+    width: 100%;
+    height: 100%;
+
+    margin: 2px;
+    justify-content: center;
+}
+
+.div_dialog_label {
+    display: flex;
+
+    background-color: var(--primary-color);
+
+    width: 40%;
+    height: 100%;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.label_filename {
+    color: var(--text-light);
+}
+
+#div_label_ext {
+    display: flex;
+    background-color: var(--primary-color);
+    height: 100%;
+
+    padding-right: 10px;
+    padding-left: 10px;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.div_row > input {
+    display: flex;
+    width: 100%;
+
+    border-width: 0px;
+    outline: 0px;
+    text-align: center;
+    
+    color: var(--text-light);
+}
+
+.div_row > select {
+    display: flex;
+    width: 100%;
+
+    border-width: 0px;
+
+    color: var(--text-light);
+    padding-left: 10px;
+    text-align: center;
+
+    background-color: #111;
+}
+
+.div_row > button {
+    display: flex;
+
+    border-width: 0px;
+    width: 100%;
+
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--primary-color);
+    color: var(--text-light);
+}
+
+.div_row > button:hover {
+    background-color: var(--primary-color-selected);
+    color: var(--text-dark);
+}
+
+.div_row > #btnCriarPasta {
+    margin-right: 2px;
+}
+
+.div_row > #btnUpload {
+    margin-left: 2px;
+}
+
+.inputAndSelect {
+    background-color: var(--back-cinza);
+}

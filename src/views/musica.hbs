@@ -1,0 +1,33 @@
+<link href="/css/musica.css" rel="stylesheet">
+<script src="/js/musica.js" defer></script>
+
+<div id="containerForm" class="contrainerInterno">
+
+    <div id="div_search" class="div_row">
+        <input id="search_field" name="palavra" placeholder="Pesquise ou cole o link">
+        <button id="btnCommand">Ok</button>
+    </div>
+    <div id="div_itens" class="scroll_style">
+    </div>
+
+    <div class="div_row div_dialog_section">
+        <div id="trackAudio">
+            <label id="dialog-title">Nenhuma Música Tocando</label>
+            <audio controls name="media" preload="none">
+                <source type="audio/mpeg">
+            </audio>
+        </div>
+        {{!-- <div id="div_download_cur_audio" class="div_download">
+        </div> --}}
+    </div>
+</div>
+
+<script>
+    //quando a página termina de carregar
+    window.onload = () => {
+        rotaApi = "{{rota}}"
+        videoId = "{{videoId}}"
+
+        ConfigIni(rotaApi, videoId)
+    }
+</script>

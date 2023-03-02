@@ -1,0 +1,38 @@
+<link href="/css/upload.css" rel="stylesheet">
+<script src="/js/upload.js" defer></script>
+
+
+<form id="containerForm" enctype="multipart/form-data">
+    <h3 id="titulo">Enviar Arquivo</h3>
+
+    <div class="div_row">
+        <div id="div_inputArquivo">
+            <label id="label_inputArquivo">Selecionar Arquivo</label>
+        </div>
+    </div>
+
+    <div class="div_row">
+        <div class="div_dialog_label">
+            <label class="label_filename">Nome</label>
+        </div>
+        <input id="input_nomesala" class="inputAndSelect" name="filename" type="text" placeholder="Alterar nome?">
+        <input id="input_replace" name="replace" type="text" style="display: none;">
+        <div id="div_label_ext">
+            <label class="label_filename" id="label_ext"></label>
+        </div>
+    </div>
+
+    <div class="div_row">
+        <div class="div_dialog_label">
+            <label class="label_filename">Pasta</label>
+        </div>
+        <select id="select_type" class="inputAndSelect"></select>
+    </div>
+
+    <input id="inputArquivo" type="file" name="file">
+
+    <div class="div_row">
+        <button id="btnCriarPasta" type="button">Nova Pasta</button>
+        <button id="btnUpload" type="submit">Upload</button>
+    </div>
+</form>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        
+        <link href="/css/cores.css" rel="stylesheet">
+        <link href="/css/main.css" rel="stylesheet">
+        <script src="/js/main.js" defer></script>
+
+        <title>Servidor</title>
+    </head>
+
+    <body>
+        <script>
+            window.userip = "desconhecido";
+        </script>
+
+        {{{body}}}
+        
+        {{!-- Div que mostra o carregamento --}}
+        <div id="loading">
+            <div id="loading-circle">
+                <label>Carregando...</label>
+            </div>
+        </div>
+
+        {{!-- Div que mostra uma mensagem ao usuario --}}
+        <div id="divContainerAsk">
+            <form id="divAsk">
+                <label>Carregando...</label>
+                <input type="text">
+                <div id="divBtnAsk">
+                    <button type="button" id="btnAskNo">Cancelar</button>
+                    <button type="submit" id="btnAskYes">Ok</button>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>

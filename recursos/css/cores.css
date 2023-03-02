@@ -1,0 +1,8 @@
+:root {
+    --back_color: #111;
+    --back-cinza: #00000000;
+    --primary-color: rgb(161, 64, 8);
+    --primary-color-selected: rgb(255, 123, 0);
+    --text-light: #fff;
+    --text-dark: #000;
+}

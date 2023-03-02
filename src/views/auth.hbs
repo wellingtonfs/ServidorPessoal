@@ -1,0 +1,46 @@
+<script>
+    window.onload = () => {
+        let folder = "{{folder}}"
+
+        function onPressOk (password) {
+            if (!password) return alert("Senha não informada")
+
+            showLoading()
+
+            $.ajax({
+                url: `/api/auth/requestpermission/${encodeURIComponent(folder)}`,
+                method: "POST",
+                data: { password }
+            }).done(() => {
+                let r = history.back()
+                if (!r) location.href = '/'
+            }).fail((data) => {
+                hideLoading()
+
+                switch (data.status) {
+                    case 403:
+                        mkQuestion("Senha Incorreta. Tente novamente")
+                        break;
+                    case 404:
+                        let r = history.back()
+                        if (!r) location.href = '/'
+                        break;
+                    default:
+                        alert("Erro Desconhecido");
+                }
+            })
+        }
+
+        function mkQuestion (title) {
+            makeQuestion({
+                title: title,
+                inputType: "password",
+                keep: true,
+                ok: { title: "Ok", onPress: onPressOk },
+		        cancel: { title: "Cancelar", onPress: () => location.href = '/' }
+            })
+        }
+        
+        mkQuestion("Senha da pasta")
+    }
+</script>
