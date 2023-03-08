@@ -34,7 +34,7 @@ export default {
 
             req.body.folder = folder
             
-            return cb(null, FileService.getFolderPath(folder))
+            return cb(null, FileService.GetFolderPath(folder))
         },
         filename: (req, file, cb) => {
             if (!FileService.isValidName(req.body.filename, true)) {
