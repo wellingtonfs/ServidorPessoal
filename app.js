@@ -2,6 +2,7 @@ import path from "path"
 import fs from "fs"
 import dotenv from "dotenv"
 import { fileURLToPath } from 'url';
+import { spawn } from "child_process";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -24,6 +25,7 @@ import apiFiles from "./src/routes/api/filesystem.js"
 import apiYoutube from "./src/routes/api/youtube.js"
 import apiYoutubeRobot from "./src/routes/api/youtube_robot.js"
 import apiPostit from "./src/routes/api/postit.js"
+import apiReplicai from "./src/routes/api/replicai.js"
 
 //front
 
@@ -96,6 +98,7 @@ app.use(sessions({
 
 // Banco de dados
 mongoose.Promise = global.Promise
+mongoose.set('strictQuery', true);
 
 var connectMongo = () => {
     console.log("Tentando conectar ao banco de dados...")
@@ -122,6 +125,7 @@ app.use('/api/filesystem', apiFiles)
 app.use('/api/youtube', apiYoutube)
 app.use('/api/youtube-robot', apiYoutubeRobot)
 app.use('/api/postit', apiPostit)
+app.use('/api/replicai', apiReplicai)
 
 //front
 
@@ -131,11 +135,17 @@ app.use('/youtube', rotaYoutube)
 
 let server = app.listen(process.env.PORTA, () => console.log("Servidor Iniciado! IP: http://localhost:" + process.env.PORTA))
 
+const childProcess = spawn('uvicorn', ['genpose:app']);
+
 async function clear(error) {
     console.log("Erro:", error ? error : "desconhecido")
 
-    server.close()
+    server.close(() => {
+        childProcess.kill('SIGTERM');
+    })
+
     await MyRobot.close()
+
     process.exit(1);
 }
 
