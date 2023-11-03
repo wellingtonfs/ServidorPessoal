@@ -135,7 +135,7 @@ app.use('/youtube', rotaYoutube)
 
 let server = app.listen(process.env.PORTA, () => console.log("Servidor Iniciado! IP: http://localhost:" + process.env.PORTA))
 
-const childProcess = spawn('uvicorn', ['genpose:app']);
+const childProcess = spawn( (process.platform == "win32") ? 'python' : 'python3', ['genpose.py']);
 
 async function clear(error) {
     console.log("Erro:", error ? error : "desconhecido")
