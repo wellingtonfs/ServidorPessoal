@@ -339,7 +339,7 @@ async def upload_item(item: Item):
     try:
         # Carregue a imagem de 256x256 pixels
         image = cv2.imread(item.path)
-        height, width, _ = image.shape
+        height, width, _ = (256, 256, 3)
 
         # Detecte mãos, pose e face mesh
         hands_results = hands_detector.process(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
