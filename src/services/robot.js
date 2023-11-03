@@ -1,7 +1,7 @@
-import puppeteer from "puppeteer"
-import cheerio from "cheerio"
-import fetch from "node-fetch";
-import Video from "../models/Video.js"
+// import puppeteer from "puppeteer"
+// import cheerio from "cheerio"
+// import fetch from "node-fetch";
+// import Video from "../models/Video.js"
 
 import path from "path"
 import dotenv from "dotenv"
@@ -14,37 +14,37 @@ dotenv.config({ path: path.join(__dirname, '..', '..', '.env') });
 
 class MyRobot {
     constructor() {
-        this.browser = null
+        this.browser = null;
 
-        this.counter = 0
-        this.shouldReconnect = true
+        this.counter = 0;
+        this.shouldReconnect = true;
     
-        this.start()
-        this.getVideoId = this.getVideoId.bind(this)
-        this.checkCounter = this.checkCounter.bind(this)
+        // this.start()
+        this.getVideoId = this.getVideoId.bind(this);
+        this.checkCounter = this.checkCounter.bind(this);
     }
 
-    async start() {
-        this.browser = await puppeteer.launch({
-            headless: true,
-            args: [
-                '--no-sandbox',
-                '--disable-setuid-sandbox',
-            ]
-        });
+    // async start() {
+    //     this.browser = await puppeteer.launch({
+    //         headless: true,
+    //         args: [
+    //             '--no-sandbox',
+    //             '--disable-setuid-sandbox',
+    //         ]
+    //     });
 
-        this.browser.on("disconnected", async () => {
-            console.log("Desconectado do browser")
+    //     this.browser.on("disconnected", async () => {
+    //         console.log("Desconectado do browser")
 
-            if (this.shouldReconnect) {
-                await this.browser.close()
-                await this.start()
-                console.log("Reconectado?", this.browser.isConnected() ? "Sim" : "Não")
-            } else {
-                console.log("Não devo reconectar")
-            }
-        })
-    }
+    //         if (this.shouldReconnect) {
+    //             await this.browser.close()
+    //             await this.start()
+    //             console.log("Reconectado?", this.browser.isConnected() ? "Sim" : "Não")
+    //         } else {
+    //             console.log("Não devo reconectar")
+    //         }
+    //     })
+    // }
 
     getVideoId(url) {
         let lookFor = "watch?v="
@@ -97,67 +97,71 @@ class MyRobot {
     }
 
     async getVideoDetails(videoId) {
-        if (!videoId) return null;
 
-        //buscar no banco de dados primeiro
+        // REMOVER DEPOIS
+        return null;
 
-        const video = await Video.findOne({ id: videoId })
-        if (video) {
-            return {
-                id: video.id,
-                title: video.title,
-                img: `https://i.ytimg.com/vi/${video.id}/${video.imgname}`,
-                duration: this.convertIntToDuration(video.duration)
-            };
-        }
+        // if (!videoId) return null;
 
-        //caso não ache
+        // //buscar no banco de dados primeiro
 
-        let data;
-        let imgname = "maxresdefault.jpg";
+        // const video = await Video.findOne({ id: videoId })
+        // if (video) {
+        //     return {
+        //         id: video.id,
+        //         title: video.title,
+        //         img: `https://i.ytimg.com/vi/${video.id}/${video.imgname}`,
+        //         duration: this.convertIntToDuration(video.duration)
+        //     };
+        // }
 
-        try {    
-            let response = await fetch(`https://www.youtube.com/watch?v=${videoId.trim()}`)
+        // //caso não ache
 
-            const $ = cheerio.load(await response.text());
+        // let data;
+        // let imgname = "maxresdefault.jpg";
 
-            let title = $('[name="title"]')
+        // try {    
+        //     let response = await fetch(`https://www.youtube.com/watch?v=${videoId.trim()}`)
 
-            if (!title['0'].attribs.content)
-                return null;
+        //     const $ = cheerio.load(await response.text());
+
+        //     let title = $('[name="title"]')
+
+        //     if (!title['0'].attribs.content)
+        //         return null;
     
-            let id = $('[itemprop="videoId"]')
-            let img = $('[property="og:image"]')
-            let duration = $('[itemprop="duration"]')
+        //     let id = $('[itemprop="videoId"]')
+        //     let img = $('[property="og:image"]')
+        //     let duration = $('[itemprop="duration"]')
             
-            title = title['0'].attribs.content
+        //     title = title['0'].attribs.content
 
-            if (id['0']) id = id['0'].attribs.content
-            if (img['0']) img = img['0'].attribs.content
-            if (duration['0']) duration = duration['0'].attribs.content
+        //     if (id['0']) id = id['0'].attribs.content
+        //     if (img['0']) img = img['0'].attribs.content
+        //     if (duration['0']) duration = duration['0'].attribs.content
 
-            imgname = this.getImgName(img)
+        //     imgname = this.getImgName(img)
     
-            data = {
-                id,
-                title,
-                img,
-                duration: this.convertStringToDuration(duration)
-            }
-        } catch (e) {
-            console.log(e)
-            return null
-        }
+        //     data = {
+        //         id,
+        //         title,
+        //         img,
+        //         duration: this.convertStringToDuration(duration)
+        //     }
+        // } catch (e) {
+        //     console.log(e)
+        //     return null
+        // }
 
-        //salva no banco de dados
-        await Video.create({
-            id: data.id,
-            title: data.title,
-            imgname: imgname,
-            duration: this.convertDurationToInt(data.duration)
-        })
+        // //salva no banco de dados
+        // await Video.create({
+        //     id: data.id,
+        //     title: data.title,
+        //     imgname: imgname,
+        //     duration: this.convertDurationToInt(data.duration)
+        // })
 
-        return data
+        // return data
     }
 
     async checkCounter(resolve, reject, c) {
@@ -174,141 +178,147 @@ class MyRobot {
     }
 
     async getResults(parametro, similar) {
-        if (!parametro) return null
+        return null;
 
-        try {
-            await this.waitCounter()
-        } catch (e) {
-            console.log(e)
-            return null
-        }
+        // if (!parametro) return null
 
-        this.counter += 1
-        let data = null
+        // try {
+        //     await this.waitCounter()
+        // } catch (e) {
+        //     console.log(e)
+        //     return null
+        // }
 
-        try {
-            if (similar)
-                data = await this.getSimilar(parametro)
-            else
-                data = await this.makeSearch(parametro)
+        // this.counter += 1
+        // let data = null
 
-        } catch (e) {
-            console.log(e)
-            data = null
-        }
+        // try {
+        //     if (similar)
+        //         data = await this.getSimilar(parametro)
+        //     else
+        //         data = await this.makeSearch(parametro)
 
-        this.counter -= 1
-        return data;
+        // } catch (e) {
+        //     console.log(e)
+        //     data = null
+        // }
+
+        // this.counter -= 1
+        // return data;
     }
     
     async makeSearch(frase) {
-        let url = `https://www.youtube.com/results?search_query=${frase.trim().replace(/ /g, '+')}`
+        return null;
 
-        let page = await this.browser.newPage();
-        await page.exposeFunction("getVideoId", this.getVideoId);
-        await page.goto(url);
+        // let url = `https://www.youtube.com/results?search_query=${frase.trim().replace(/ /g, '+')}`
 
-        await page.waitForSelector("ytd-video-renderer #video-title")
+        // let page = await this.browser.newPage();
+        // await page.exposeFunction("getVideoId", this.getVideoId);
+        // await page.goto(url);
+
+        // await page.waitForSelector("ytd-video-renderer #video-title")
     
-        let resp = await page.evaluate(async () => {
-            try {
-                const wait = () => new Promise((res) => setTimeout(res, 100))
+        // let resp = await page.evaluate(async () => {
+        //     try {
+        //         const wait = () => new Promise((res) => setTimeout(res, 100))
 
-                let dados = document.querySelectorAll("ytd-video-renderer #video-title")
-                dados = [...dados].filter(el => el.href.includes("watch?v="))
+        //         let dados = document.querySelectorAll("ytd-video-renderer #video-title")
+        //         dados = [...dados].filter(el => el.href.includes("watch?v="))
 
-                let count = 0
+        //         let count = 0
 
-                while (dados.length < 8 && count < 30) {
-                    await wait()
+        //         while (dados.length < 8 && count < 30) {
+        //             await wait()
 
-                    dados = document.querySelectorAll("ytd-video-renderer #video-title")
-                    dados = [...dados].filter(el => el.href.includes("watch?v="))
-                    count += 1
-                }
+        //             dados = document.querySelectorAll("ytd-video-renderer #video-title")
+        //             dados = [...dados].filter(el => el.href.includes("watch?v="))
+        //             count += 1
+        //         }
 
-                let links = []
+        //         let links = []
         
-                for (let i = 0; i < dados.length; i++) {
-                    let title = dados[i].title
-                    let linkvideo = dados[i].href
+        //         for (let i = 0; i < dados.length; i++) {
+        //             let title = dados[i].title
+        //             let linkvideo = dados[i].href
 
-                    linkvideo = await getVideoId(linkvideo)
+        //             linkvideo = await getVideoId(linkvideo)
 
-                    links.push({
-                        id: linkvideo,
-                        title: title
-                    })
-                }
+        //             links.push({
+        //                 id: linkvideo,
+        //                 title: title
+        //             })
+        //         }
 
-                return links
+        //         return links
 
-            } catch (e) {
-                return null
-            }
-        })
+        //     } catch (e) {
+        //         return null
+        //     }
+        // })
 
-        await page.close()
+        // await page.close()
 
-        if (resp === null) return null
+        // if (resp === null) return null
 
-        return {
-            videos: resp
-        }
+        // return {
+        //     videos: resp
+        // }
     }
 
     async getSimilar(videoId) {
-        let url = `https://www.youtube.com/watch?v=${videoId.trim()}`
+        return null;
 
-        let page = await this.browser.newPage();
-        await page.exposeFunction("getVideoId", this.getVideoId);
-        await page.goto(url);
+        // let url = `https://www.youtube.com/watch?v=${videoId.trim()}`
 
-        await page.waitForSelector("ytd-compact-video-renderer .details a span")
+        // let page = await this.browser.newPage();
+        // await page.exposeFunction("getVideoId", this.getVideoId);
+        // await page.goto(url);
+
+        // await page.waitForSelector("ytd-compact-video-renderer .details a span")
     
-        let resp = await page.evaluate(async () => {
-            try {
-                const wait = () => new Promise((res) => setTimeout(res, 100))
+        // let resp = await page.evaluate(async () => {
+        //     try {
+        //         const wait = () => new Promise((res) => setTimeout(res, 100))
 
-                let dados = document.querySelectorAll("ytd-compact-video-renderer .details a")
-                dados = [...dados].filter(el => el.href.includes("watch?v="))
+        //         let dados = document.querySelectorAll("ytd-compact-video-renderer .details a")
+        //         dados = [...dados].filter(el => el.href.includes("watch?v="))
                 
-                let count = 0
+        //         let count = 0
 
-                while (dados.length < 8 && count < 30) {
-                    await wait()
+        //         while (dados.length < 8 && count < 30) {
+        //             await wait()
 
-                    dados = document.querySelectorAll("ytd-compact-video-renderer .details a")
-                    dados = [...dados].filter(el => el.href.includes("watch?v="))
-                    count += 1
-                }
+        //             dados = document.querySelectorAll("ytd-compact-video-renderer .details a")
+        //             dados = [...dados].filter(el => el.href.includes("watch?v="))
+        //             count += 1
+        //         }
 
-                let links = []
+        //         let links = []
 
-                for (let i = 0; i < dados.length; i++) {
-                    const span = dados[i].querySelector('span')
+        //         for (let i = 0; i < dados.length; i++) {
+        //             const span = dados[i].querySelector('span')
 
-                    if (typeof span == 'undefined') break;
+        //             if (typeof span == 'undefined') break;
 
-                    links.push({
-                        id: await getVideoId(dados[i].href),
-                        title: span.title
-                    })
-                }
+        //             links.push({
+        //                 id: await getVideoId(dados[i].href),
+        //                 title: span.title
+        //             })
+        //         }
 
-                return links
-            } catch (e) {
-                return null
-            }
-        })
+        //         return links
+        //     } catch (e) {
+        //         return null
+        //     }
+        // })
 
-        await page.close()
+        // await page.close()
 
-        if (resp === null) return null
+        // if (resp === null) return null
 
-        return {
-            videos: resp
-        }
+        // return {
+        //     videos: resp
+        // }
     }
 
     async close() {
